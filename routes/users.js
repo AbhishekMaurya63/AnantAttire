@@ -21,14 +21,14 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// PUT /api/users/:id - admin update any user except himself
+
 router.put("/:id", auth, async (req, res) => {
   try {
     const admin = req.user;
     const { id } = req.params;
 
     if (admin.role !== "admin") return res.status(403).json({ message: "Forbidden" });
-    if (String(admin._id) === id) return res.status(400).json({ message: "Admin cannot modify his own data via this endpoint" });
+    // if (String(admin._id) === id) return res.status(400).json({ message: "Admin cannot modify his own data via this endpoint" });
 
     const { name, email, username, password, role } = req.body;
     const update = {};
@@ -65,9 +65,9 @@ router.get("/profile", auth, async (req, res) => {
 // PUT /api/users/profile - update own profile
 router.put("/profile", auth, async (req, res) => {
   try {
+    console.log(req.user,req.body)
     const user = req.user;
     const { name, email, username, password } = req.body;
-
     if (email && email.toLowerCase() !== user.email) {
       const exists = await User.findOne({ email: email.toLowerCase() });
       if (exists) return res.status(400).json({ message: "Email already in use" });

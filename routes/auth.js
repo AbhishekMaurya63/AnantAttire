@@ -114,11 +114,39 @@ router.post("/forgot-password", async (req, res) => {
 
     try {
       await sendMail({
-        to: email,
-        subject: "Your OTP Code",
-        text: `Your OTP is ${code}. It expires in ${minutes} minute(s).`,
-        html: `<p>Your OTP is <strong>${code}</strong>. It expires in ${minutes} minute(s).</p>`,
-      });
+  to: email,
+  subject: "🔑 Your OTP Code",
+  text: `Your OTP is ${code}. It expires in ${minutes} minute(s).`,
+  html: `
+    <div style="font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px;">
+      <div style="max-width:500px; margin:auto; background:#fff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:30px; text-align:center;">
+        
+        <!-- Header -->
+        <h2 style="color:#4CAF50; margin-bottom:20px;">🔒 Verification Required</h2>
+        <p style="color:#555; font-size:15px; margin-bottom:25px;">
+          Use the OTP code below to complete your verification. 
+        </p>
+
+        <!-- OTP Box -->
+        <div style="background:#f9f9f9; border:2px dashed #4CAF50; display:inline-block; padding:15px 30px; border-radius:8px; margin-bottom:25px;">
+          <span style="font-size:24px; font-weight:bold; letter-spacing:3px; color:#333;">${code}</span>
+        </div>
+
+        <!-- Expiry Info -->
+        <p style="color:#777; font-size:14px;">
+          ⚠️ This OTP will expire in <b>${minutes} minute(s)</b>.
+        </p>
+
+        <!-- Footer -->
+        <div style="margin-top:30px; font-size:12px; color:#888;">
+          <p>If you did not request this, please ignore this email.</p>
+          <p>© ${new Date().getFullYear()} Your Company. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  `,
+});
+
     } catch (mailErr) {
       console.error("Mail error:", mailErr);
     }
