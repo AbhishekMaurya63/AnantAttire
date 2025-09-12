@@ -11,9 +11,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendMail = async ({ to, subject, text, html }) => {
+const sendMail = async ({ to, subject, text, html,from }) => {
   const info = await transporter.sendMail({
-    from: process.env.FROM_EMAIL,
+    from: from || process.env.FROM_EMAIL,
     to,
     subject,
     text,

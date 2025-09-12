@@ -31,11 +31,13 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import uploadImage from "./routes/imageUpload.js";
 import queryRoutes from "./routes/queryRoutes.js";
+import contact from "./routes/contactus.js";
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/queries", queryRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/contact", contact);
 app.use('/api',uploadImage)
 // Basic root
 app.get("/", (req, res) => res.send("API Running"));
